@@ -91,10 +91,13 @@ class GCNLayer(nn.Module):
 
 
 class Model(nn.Module):
-    def __init__(self, in_features, out_features, hidden_dim, num_layers, dropout):
+    def __init__(self, in_features, out_features, hidden_dim, num_layers, dropout, use_lstm=False):
         super(Model, self).__init__()
         self.num_layers = num_layers
         self.dropout = dropout
+        if use_lstm:
+            lstm_layer = nn.LSTM(1, hidden_dim, 1, batch_first=True) 
+            self.add_module('lstm_layer', lstm_layer)
         for i in range(num_layers):
             d_in = in_features if i == 0 else out_features
             pos_isn = True if i == 0 else False
@@ -121,8 +124,13 @@ class Model(nn.Module):
     def forward(self, g, x, fast_weights=None):
         count = 0
         for layer in self.children():
-            x = layer(g, x, fast_weights[2 + count * 4: 2 + (count + 1) * 4])
-            count += 1
+            if isinstance(layer, GCNLayer):
+                x = layer(g, x, fast_weights[2 + count * 4: 2 + (count + 1) * 4])
+                count += 1
+            elif isinstance(layer, nn.LSTM):
+                x = x.unsqueeze(0)
+                x, _ = layer(x)
+                x = x.squeeze(0)
 
         if fast_weights:
             weight1 = fast_weights[0]

@@ -78,6 +78,8 @@ if __name__ == '__main__':
     parser.add_argument('--beta', type=float, default=0.89,
                         help='The weight of adaptive learning rate component accumulation')
 
+    parser.add_argument('--use_lstm', type=str, default='False',
+                        help='whether or not to use LSTM in graph conv layer')
 
 
     args = parser.parse_args()
@@ -174,7 +176,8 @@ if __name__ == '__main__':
             graph_l[idx].edge_label_index = torch.LongTensor(edge_labe_index)
 
         # model initialization
-        model = WinGNN.Model(n_dim, args.out_dim, args.num_hidden, args.num_layers, args.dropout)
+        print('use_lstm:', args.use_lstm, bool(args.use_lstm))
+        model = WinGNN.Model(n_dim, args.out_dim, args.num_hidden, args.num_layers, args.dropout, use_lstm=args.use_lstm == 'True')
         model.train()
 
         # LightDyG optimizer
