@@ -115,7 +115,7 @@ if __name__ == '__main__':
 
     for rep in range(args.repeat):
 
-        logger.info('num_layers:{}, num_hidden: {}, lr: {}, maml_lr:{}, window_num:{}, drop_rate:{}, 负样本采样固定'.
+        logger.info('num_layers:{}, num_hidden: {}, lr: {}, maml_lr:{}, window_num:{}, drop_rate:{}'. 
                     format(args.num_layers, args.num_hidden, args.lr, args.maml_lr, args.window_num, args.drop_rate))
         torch.manual_seed(args.seed)
         random.seed(args.seed)

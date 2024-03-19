@@ -35,7 +35,7 @@ def train(args, model, optimizer, device, graph_l, logger, n):
                 i = random.randint(i, i + args.window_num)
             if i >= (n - args.window_num):
                 break
-            graph_train = graph_l[i: i + args.window_num]
+            graph_train = graph_l[int(i): int(i + args.window_num)]
             i = i + 1
             # Copy a version of data as a valid in the window
             features = [graph_unit.node_feature.to(device) for graph_unit in graph_train]

@@ -13,6 +13,7 @@ def test(graph_l, model, args, logger, n, S_dw, device):
     beta = args.beta
     avg_mrr = 0.0
     avg_auc = 0.0
+    avg_acc = 0.0
 
     graph_test = graph_l[n:]
     # model parameters
@@ -53,11 +54,13 @@ def test(graph_l, model, args, logger, n, S_dw, device):
         acc, ap, f1, macro_auc, micro_auc = prediction(pred, graph_test[idx + 1].edge_label)
         avg_mrr += mrr
         avg_auc += macro_auc
+        avg_acc += acc
         logger.info('meta test, mrr: {:.5f}, rl1: {:.5f}, rl3: {:.5f}, rl10: {:.5f}, acc: {:.5f}, ap: {:.5f}, f1: {:.5f}, macro_auc: {:.5f}, micro_auc: {:.5f}'.
                     format(mrr, rl1, rl3, rl10, acc, ap, f1, macro_auc, micro_auc))
 
     avg_mrr /= len(graph_test) - 1
     avg_auc /= len(graph_test) - 1
-    logger.info({'avg_mrr': avg_mrr, 'avg_auc': avg_auc})
+    avg_acc /= len(graph_test) - 1
+    logger.info({'avg_mrr': avg_mrr, 'avg_auc': avg_auc, 'avg_acc': avg_acc})
     return avg_mrr
 
