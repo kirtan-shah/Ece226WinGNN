@@ -1,6 +1,13 @@
-# WinGNN: Dynamic Graph Neural Networks with Random Gradient Aggregation Window
+# ECE 226 Compact Dynamic Updating of GNNs
+Kirtan Shah, Jialong Li
 
-This repository is our PyTorch implementation of WinGNN.
+This is a fork of WinGNN: Dynamic Graph Neural Networks with Random Gradient Aggregation Window
+
+## Our Contributions:
+- Analyzed effect of hyperparameter tuning (i.e. num layers)
+- Fixed runtime bugs and updated pip dependencies to run correctly
+
+# Original README Below
 
 ## Requirements
 ```shell

@@ -176,7 +176,6 @@ if __name__ == '__main__':
             graph_l[idx].edge_label_index = torch.LongTensor(edge_labe_index)
 
         # model initialization
-        print('use_lstm:', args.use_lstm, bool(args.use_lstm))
         model = WinGNN.Model(n_dim, args.out_dim, args.num_hidden, args.num_layers, args.dropout, use_lstm=args.use_lstm == 'True')
         model.train()
 
